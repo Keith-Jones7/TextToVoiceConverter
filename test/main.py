@@ -7,14 +7,15 @@ speech_region = os.environ.get('SPEECH_REGION')
 
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=speech_region)
 
+convert_name = "3"
 # 指定输出音频文件路径
-audio_output_path = "../output/2.wav"
+audio_output_path = os.path.join("..", "output", convert_name + ".wav")
 audio_config = speechsdk.audio.AudioOutputConfig(filename=audio_output_path)
 
 speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 
 # 读取SSML文本从文件
-ssml_file_path = r"..\input\2.txt"  # 请确保这是正确的路径
+ssml_file_path = os.path.join("..", "input", convert_name + ".txt")  # 请确保这是正确的路径
 with open(ssml_file_path, 'r', encoding='utf-8') as file:
     ssml_text = file.read()
 
@@ -30,3 +31,4 @@ elif speech_synthesis_result.reason == speechsdk.ResultReason.Canceled:
         if cancellation_details.error_details:
             print("Error details: {}".format(cancellation_details.error_details))
             print("Did you set the speech resource key and region values?")
+
